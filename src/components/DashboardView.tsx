@@ -355,48 +355,60 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               Special BCS Crystal Batch official rankings
             </p>
 
-            <div className="space-y-2">
-              {leaderboard.slice(0, 5).map((entry, index) => {
-                const isUser = entry.name.toLowerCase() === userName.toLowerCase();
-                return (
-                  <div
-                    key={entry.id || index}
-                    className={`flex items-center justify-between p-2.5 rounded-xl border text-xs transition ${
-                      isUser
-                        ? 'bg-emerald-50/70 border-emerald-300 text-emerald-900 font-semibold'
-                        : 'bg-slate-50/60 border-slate-100 text-slate-800'
-                    }`}
-                  >
-                    <div className="flex items-center space-x-2.5 truncate max-w-[170px]">
-                      <span className={`w-5 h-5 rounded-md flex items-center justify-center font-bold text-[11px] ${
-                        index === 0
-                          ? 'bg-amber-100 text-amber-800'
-                          : index === 1
-                          ? 'bg-slate-200 text-slate-800'
-                          : index === 2
-                          ? 'bg-amber-50 text-amber-700'
-                          : 'text-slate-400'
-                      }`}>
-                        {index + 1}
-                      </span>
-                      <span className="truncate">
-                        {entry.name}
-                        {isUser && ' (You)'}
-                      </span>
-                    </div>
+            {leaderboard.length === 0 ? (
+              <div className="py-8 text-center">
+                <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-2">
+                  <Award className="w-5 h-5 text-slate-400" />
+                </div>
+                <p className="text-xs font-semibold text-slate-700">Leaderboard is Fresh & Reset</p>
+                <p className="text-[11px] text-slate-400 mt-1 max-w-[220px] mx-auto">
+                  No records yet. Be the first doctor in the Crystal Batch to secure a rank!
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                {leaderboard.slice(0, 5).map((entry, index) => {
+                  const isUser = entry.name.toLowerCase() === userName.toLowerCase();
+                  return (
+                    <div
+                      key={entry.id || index}
+                      className={`flex items-center justify-between p-2.5 rounded-xl border text-xs transition ${
+                        isUser
+                          ? 'bg-emerald-50/70 border-emerald-300 text-emerald-900 font-semibold'
+                          : 'bg-slate-50/60 border-slate-100 text-slate-800'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-2.5 truncate max-w-[170px]">
+                        <span className={`w-5 h-5 rounded-md flex items-center justify-center font-bold text-[11px] ${
+                          index === 0
+                            ? 'bg-amber-100 text-amber-800'
+                            : index === 1
+                            ? 'bg-slate-200 text-slate-800'
+                            : index === 2
+                            ? 'bg-amber-50 text-amber-700'
+                            : 'text-slate-400'
+                        }`}>
+                          {index + 1}
+                        </span>
+                        <span className="truncate">
+                          {entry.name}
+                          {isUser && ' (You)'}
+                        </span>
+                      </div>
 
-                    <div className="flex items-center space-x-2 shrink-0">
-                      <span className="font-bold text-slate-900 tabular-nums">
-                        {entry.score}/50
-                      </span>
-                      <span className="text-[10px] text-slate-400 tabular-nums">
-                        {entry.percentage}%
-                      </span>
+                      <div className="flex items-center space-x-2 shrink-0">
+                        <span className="font-bold text-slate-900 tabular-nums">
+                          {entry.score}/50
+                        </span>
+                        <span className="text-[10px] text-slate-400 tabular-nums">
+                          {entry.percentage}%
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           <div className="pt-4 border-t border-slate-100 mt-4">

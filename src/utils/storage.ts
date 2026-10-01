@@ -95,6 +95,23 @@ export function saveAttempt(attempt: QuizAttempt): void {
   localStorage.setItem(ATTEMPTS_KEY, JSON.stringify(attempts));
 }
 
+const LEADERBOARD_CLEARED_KEY = 'cpr_anatomy_leaderboard_cleared';
+
+export function isLeaderboardReset(): boolean {
+  const val = localStorage.getItem(LEADERBOARD_CLEARED_KEY);
+  // Default to true now because the user requested the leaderboard to be reset
+  return val === null ? true : val === 'true';
+}
+
+export function resetLeaderboard(): void {
+  localStorage.setItem(LEADERBOARD_CLEARED_KEY, 'true');
+  localStorage.removeItem(ATTEMPTS_KEY);
+}
+
+export function restoreSampleLeaderboard(): void {
+  localStorage.setItem(LEADERBOARD_CLEARED_KEY, 'false');
+}
+
 export function getLeaderboard(): LeaderboardEntry[] {
   const attempts = getAttempts();
   const currentUser = getStoredUser();
@@ -115,8 +132,10 @@ export function getLeaderboard(): LeaderboardEntry[] {
     };
   });
 
-  // Combine user attempts with peer benchmark entries
-  const allEntries = [...userEntries, ...INITIAL_PEER_LEADERBOARD];
+  const isReset = isLeaderboardReset();
+  const peerEntries = isReset ? [] : INITIAL_PEER_LEADERBOARD;
+
+  const allEntries = [...userEntries, ...peerEntries];
 
   // Sort by score desc, then percentage desc, then time
   allEntries.sort((a, b) => {
@@ -129,7 +148,7 @@ export function getLeaderboard(): LeaderboardEntry[] {
 }
 
 export function clearUserAttempts(): void {
-  localStorage.removeItem(ATTEMPTS_KEY);
+  resetLeaderboard();
 }
 
 export function getBookmarks(): number[] {

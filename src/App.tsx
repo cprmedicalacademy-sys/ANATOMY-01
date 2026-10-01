@@ -138,6 +138,7 @@ export default function App() {
             userName={userName}
             onGoToDashboard={() => setCurrentTab('dashboard')}
             onShareEntry={handleShareEntry}
+            onStartExam={() => handleStartExam('exam')}
           />
         )}
 
