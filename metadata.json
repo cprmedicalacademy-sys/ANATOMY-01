@@ -1,0 +1,6 @@
+{
+  "name": "CPR Medical Academy - Anatomy-01 Quiz & Dashboard",
+  "description": "Interactive Anatomy-01 exam simulator, performance dashboard, comprehensive study bank, and Crystal Batch leaderboard for CPR Medical Academy.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
